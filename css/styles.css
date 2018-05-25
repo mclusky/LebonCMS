@@ -1,0 +1,18 @@
+.active_link {
+    background: #fca976 !important;
+}
+
+
+/*#main-footer {
+    position: relative;
+    bottom: 0;
+}*/
+
+.post-img {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+#cat-dropdown li:hover {
+    background: lightblue;
+}
