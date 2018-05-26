@@ -3,7 +3,6 @@
 use PHPMailer\PHPMailer\PHPMailer;
 require "./vendor/autoload.php";
 ?>
-<?php require "./classes/config.php";?>
 <?php
 
 $mail = new PHPMailer();
@@ -44,11 +43,12 @@ if (ifIsMethod('post')) {
 				$mail->SMTPSecure = 'tls';
 				$mail->Port = Config::SMTP_PORT;
 				$mail->isHTML(true);
+				$mail->CharSet = 'UTF-8';
 
 				$mail->setFrom('chrischatou@gmail.com', 'Chris Lebon');
 				$mail->addAddress($email);
 				$mail->Subject = 'This is a test.';
-				$mail->Body = 'Body of email.';
+				$mail->Body = 'Bodycount.';
 
 				if ($mail->send()) {
 					echo "Success!";

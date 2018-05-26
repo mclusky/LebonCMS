@@ -1,5 +1,19 @@
 {
-    "require": {
+    "name": "Chris CMS",
+    "require":
+    {
         "phpmailer/phpmailer": "^6.0"
+    },
+    "authors": [
+    {
+
+        "name": "Chris Lebon",
+        "email": "chrislebon@g.com"
+    }],
+    "autoload":
+    {
+        "classmap": [
+            "classes"
+        ]
     }
 }
