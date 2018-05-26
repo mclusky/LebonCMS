@@ -1,90 +1,50 @@
-<?php use PHPMailer\PHPMailer\Exception;?>
-<?php use PHPMailer\PHPMailer\PHPMailer;?>
-<?php require "./vendor/autoload.php";?>
 <?php include "include/header.php";?>
+
+
 <?php
 
-if (!ifIsMethod('get') && !isset($_GET['forgot'])) {
-	redirect('index');
-}
+// if (!isset($_GET['email']) && !isset($_GET['token'])) {
+// 	redirect('index');
+// }
+$token = $_GET['token'];
+$query = "SELECT username, user_email, token FROM users WHERE token=?";
 
-$emailSent = '';
+if ($stmt = mysqli_prepare($connection, $query)) {
 
-if (ifIsMethod('post')) {
+	mysqli_stmt_bind_param($stmt, 's', $token);
 
-	if (isset($_POST['recover-submit'])) {
+	mysqli_stmt_execute($stmt);
 
-		$email = escape($_POST['email']);
-		$len = 50;
-		$token = bin2hex(openssl_random_pseudo_bytes($len));
+	mysqli_stmt_bind_result($stmt, $username, $user_email, $token);
 
-		if (emailExists($email)) {
-			$query = "UPDATE users SET token = '{$token}' WHERE user_email = ? ";
+	mysqli_stmt_fetch($stmt);
 
-			if ($stmt = mysqli_prepare($connection, $query)) {
-				mysqli_stmt_bind_param($stmt, "s", $email);
+	mysqli_stmt_close($stmt);
 
-				mysqli_stmt_execute($stmt);
-
-				mysqli_stmt_close($stmt);
-
-				// **********************************************************//
-				// ************* CONFIGURE PHPMAILER *************************//
-				// **********************************************************//
-				$mail = new PHPMailer();
-
-				//Server settings
-				$mail->isSMTP();
-				$mail->Host = Config::SMTP_HOST;
-				$mail->SMTPAuth = true;
-				$mail->Username = Config::SMTP_USER;
-				$mail->Password = Config::SMTP_PASSWORD;
-				$mail->SMTPSecure = 'tls';
-				$mail->Port = Config::SMTP_PORT;
-				$mail->isHTML(true);
-				$mail->CharSet = 'UTF-8';
-
-				$mail->setFrom('chrischatou@gmail.com', 'Chris Lebon');
-				$mail->addAddress($email);
-				$mail->Subject = 'This is a test.';
-				$mail->Body = "<h3>Please click on the link to reset your password.</h3>
-					<a href='http://localhost/cms/reset_password.php?email={$email}&token={$token}'>Reset</a>";
-
-				if ($mail->send()) {
-					$emailSent = true;
-
-				} else {
-					echo "Failed to send email.";
-				}
-			}
-
-		}
-
-	}
-
+	echo $username;
 }
 
 ?>
+ <!-- Navigation -->
+
+    <?php include "include/navigation.php";?>
+
 
 <!-- Page Content -->
 <div class="container">
 
     <div class="form-gap"></div>
     <div class="container">
-
-	<?php if (!($emailSent)): ?>
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="text-center">
+
                                 <h3><i class="fa fa-lock fa-4x"></i></h3>
                                 <h2 class="text-center">Forgot Password?</h2>
                                 <p>You can reset your password here.</p>
                                 <div class="panel-body">
-
-
-
 
                                     <form id="register-form" role="form" autocomplete="off" class="form" method="post">
 
@@ -102,26 +62,14 @@ if (ifIsMethod('post')) {
                                     </form>
 
                                 </div><!-- Body-->
+
+                                <h2>Please check your email</h2>
+
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-        <?php else: ?>
-        <div class="row">
-	        <div class="col text-center">
-	        	<div class="panel panel-default">
-	        		<div class="panel-body">
-						<h2>A link to reset your password has been sent.</h2>
-	        		</div>
-	        	</div>
-	     	</div>
-        </div>
-
-		<?php endif;?>
-
-
     </div>
 
 
