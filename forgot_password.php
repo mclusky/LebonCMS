@@ -1,5 +1,12 @@
 <?php include "include/header.php";?>
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+require "./vendor/autoload.php";
+?>
+<?php require "./classes/config.php";?>
+<?php
+
+$mail = new PHPMailer();
 
 if (!ifIsMethod('get') && !isset($_GET['forgot'])) {
 	redirect('index');
@@ -23,8 +30,31 @@ if (ifIsMethod('post')) {
 
 				mysqli_stmt_close($stmt);
 
-			} else {
-				echo mysqli_error();
+				// **********************************************************//
+				// ************* CONFIGURE PHPMAILER *************************//
+				// **********************************************************//
+				$mail = new PHPMailer();
+
+				//Server settings
+				$mail->isSMTP();
+				$mail->Host = Config::SMTP_HOST;
+				$mail->SMTPAuth = true;
+				$mail->Username = Config::SMTP_USER;
+				$mail->Password = Config::SMTP_PASSWORD;
+				$mail->SMTPSecure = 'tls';
+				$mail->Port = Config::SMTP_PORT;
+				$mail->isHTML(true);
+
+				$mail->setFrom('chrischatou@gmail.com', 'Chris Lebon');
+				$mail->addAddress($email);
+				$mail->Subject = 'This is a test.';
+				$mail->Body = 'Body of email.';
+
+				if ($mail->send()) {
+					echo "Success!";
+				} else {
+					echo "Failed to send email.";
+				}
 			}
 
 		}
