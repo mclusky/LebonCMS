@@ -254,9 +254,6 @@ function loginUser($username, $password) {
 		$db_role = $row['user_role'];
 		$db_email = $row['user_email'];
 
-		//Decrypting Password using crypted password form database
-		// $login_password = crypt($login_password, $db_password);
-
 		if (password_verify($password, $db_password)) {
 
 			session_start();

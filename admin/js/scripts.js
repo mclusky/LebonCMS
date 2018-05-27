@@ -36,7 +36,7 @@
 
        $('.delete').on('click', function() {
            const id = $(this).data('id');
-           const url = `posts.php?delete=${id}`;
+           const url = `/cms/admin/posts.php?delete=${id}`;
            $('.modal-link').attr('href', url);
            $('#myModal').modal('show');
 

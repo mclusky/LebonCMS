@@ -44,9 +44,9 @@ if (ifIsMethod('post')) {
 				$mail->isHTML(true);
 				$mail->CharSet = 'UTF-8';
 
-				$mail->setFrom('chrischatou@gmail.com', 'Chris Lebon');
+				$mail->setFrom('chris@gmail.com', 'Chris Lebon CMS');
 				$mail->addAddress($email);
-				$mail->Subject = 'This is a test.';
+				$mail->Subject = 'Password Reset.';
 				$mail->Body = "<h3>Please click on the link to reset your password.</h3>
 					<a href='http://localhost/cms/reset_password.php?email={$email}&token={$token}'>Reset</a>";
 
