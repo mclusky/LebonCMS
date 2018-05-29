@@ -5,6 +5,13 @@ function redirect($location) {
 	exit;
 }
 
+function imagePlaceholder($image = null) {
+	if (!$image) {
+		return '';
+	}
+
+}
+
 function ifIsMethod($method = null) {
 	if ($_SERVER['REQUEST_METHOD'] === strtoupper($method)) {
 		return true;
@@ -272,5 +279,7 @@ function loginUser($username, $password) {
 	}
 
 }
+
+// ********************* POPULATING POSTS PAGE ********************//
 
 ?>

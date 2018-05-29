@@ -71,10 +71,10 @@ if (isset($_GET['p_id'])) {
 		if (isset($_POST['create_comment'])) {
 			$post_id = escape($_GET['p_id']);
 
-			$comment_author = escape($_POST['comment_author']);
+			$comment_author = $_SESSION['username'];
 			$comment_content = escape($_POST['comment_content']);
 
-			if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
+			if (!empty($comment_content)) {
 
 				$query = "INSERT INTO comments (comment_post_id, comment_date, comment_author, comment_content, comment_status) ";
 				$query .= "VALUES ($post_id, now(), '{$comment_author}', '{$comment_content}', 'waiting for approval')";
