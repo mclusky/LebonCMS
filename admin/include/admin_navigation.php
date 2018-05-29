@@ -58,6 +58,7 @@ if (isset($_SESSION['username'])) {
                     <li class="">
                         <a href="comments.php"><i class="fa fa-fw fa-file"></i> Comments</a>
                     </li>
+                    <?php if (is_admin($_SESSION['username'])): ?>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#users"><i class="fa fa-fw fa-arrows-v"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="users" class="collapse">
@@ -69,6 +70,7 @@ if (isset($_SESSION['username'])) {
                             </li>
                         </ul>
                     </li>
+                    <?php endif;?>
                     <li>
                         <a href="profile.php"><i class="fa fa-fw fa-dashboard"></i> Profile</a>
                     </li>

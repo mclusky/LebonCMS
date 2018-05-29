@@ -1,4 +1,5 @@
 .DS_Store
+.env
 admin/.DS_Store
 admin/images/.DS_Store
 index_old.php

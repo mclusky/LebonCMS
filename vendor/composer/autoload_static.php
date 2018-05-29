@@ -9,14 +9,32 @@ class ComposerStaticInit2e21303c31e9717193d32502250b97d8
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
+            'Pusher\\' => 7,
+            'Psr\\Log\\' => 8,
             'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'D' => 
+        array (
+            'Dotenv\\' => 7,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Pusher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pusher/pusher-php-server/src',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
     );
 

@@ -7,7 +7,9 @@ function redirect($location) {
 
 function imagePlaceholder($image = null) {
 	if (!$image) {
-		return '';
+		return 'https://www.lorempixel.com/200/200/nature/?';
+	} else {
+		return "/cms/images/{$image}";
 	}
 
 }
@@ -269,6 +271,7 @@ function loginUser($username, $password) {
 			$_SESSION['firstname'] = $db_firstname;
 			$_SESSION['lastname'] = $db_lastname;
 			$_SESSION['role'] = $db_role;
+			$_SESSION['email'] = db_email;
 
 			redirect('/cms/admin/');
 

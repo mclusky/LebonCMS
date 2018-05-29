@@ -56,7 +56,7 @@ if (isset($_GET['p_id'])) {
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?></p>
                 <hr>
-                <img class="img-responsive" src="/cms/images/<?php echo $post_image; ?>" alt="">
+                <img class="img-responsive" src="<?php echo imagePlaceholder($post_image) ?>" alt="">
                 <hr>
                 <p><?php echo $post_content; ?></p>
                 <hr>
@@ -72,12 +72,13 @@ if (isset($_GET['p_id'])) {
 			$post_id = escape($_GET['p_id']);
 
 			$comment_author = $_SESSION['username'];
+			$comment_email = $_SESSION['email'];
 			$comment_content = escape($_POST['comment_content']);
 
 			if (!empty($comment_content)) {
 
-				$query = "INSERT INTO comments (comment_post_id, comment_date, comment_author, comment_content, comment_status) ";
-				$query .= "VALUES ($post_id, now(), '{$comment_author}', '{$comment_content}', 'waiting for approval')";
+				$query = "INSERT INTO comments (comment_post_id, comment_date, comment_author, comment_email, comment_content, comment_status) ";
+				$query .= "VALUES ($post_id, now(), '{$comment_author}', '{$comment_email}', '{$comment_content}', 'waiting for approval')";
 
 				$comment_query = mysqli_query($connection, $query);
 

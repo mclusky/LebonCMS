@@ -41,4 +41,17 @@
            $('.modal-link').attr('href', url);
            $('#myModal').modal('show');
        });
+
+       // ************** PUSHER INIT *****************//
+       const pusher = new Pusher('d8339920520e053b9885', {
+           cluster: 'eu',
+           encrypted: true
+       });
+
+       const channel = pusher.subscribe('notifications');
+       channel.bind('new_user', function(data) {
+           const info = data.message;
+           toastr.success(`${info} has just registered.`);
+       });
+
    });

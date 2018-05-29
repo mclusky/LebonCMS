@@ -64,7 +64,7 @@ if ($count < 1) {
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?></p>
                 <hr>
-                <a href="post/<?php echo $post_id; ?>"><img class="img-responsive" src="/cms/images/<?php echo $post_image; ?>" alt=""></a>
+                <a href="post/<?php echo $post_id; ?>"><img class="img-responsive" src="<?php echo imagePlaceholder($post_image); ?>" alt=""></a>
                 <hr>
                 <p><?php echo $post_content; ?></p>
                 <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>

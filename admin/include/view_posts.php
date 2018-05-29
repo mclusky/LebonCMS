@@ -108,6 +108,8 @@ if (is_admin($user)) {
 			$query_comments = mysqli_query($connection, $query2);
 			$comment_count = mysqli_num_rows($query_comments);
 
+			$postImage = imagePlaceholder($post_image);
+
 			echo "<tr>
         <td><input type='checkbox' class='checkboxes' name='checkboxArray[]' value='{$post_id}'></td>
         <td>{$post_id}</td>
@@ -115,7 +117,7 @@ if (is_admin($user)) {
         <td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>
         <td>{$cat_title}</td>
         <td>{$post_status}</td>
-        <td class='post-img'><img class='img-responsive img-thumbnail' src='../images/$post_image' alt=''</td>
+        <td class='post-img'><img class='img-responsive img-thumbnail' src='{$postImage}' alt=''</td>
         <td>{$post_tags}</td>
         <td>{$post_date}</td>
 
