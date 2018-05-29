@@ -35,10 +35,10 @@
        }, 500);
 
        $('.delete').on('click', function() {
+           e.preventDefault();
            const id = $(this).data('id');
            const url = `/cms/admin/posts.php?delete=${id}`;
            $('.modal-link').attr('href', url);
            $('#myModal').modal('show');
-
        });
    });

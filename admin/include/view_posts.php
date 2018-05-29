@@ -31,7 +31,7 @@ if (isset($_POST['checkboxArray'])) {
 				$post_date = $row['post_date'];
 				$post_image = $row['post_image'];
 				$post_tags = $row['post_tags'];
-				$post_content = $row['post_content'];
+				$post_content = escape($row['post_content']);
 				$post_status = $row['post_status'];
 			}
 
@@ -49,7 +49,7 @@ if (isset($_POST['checkboxArray'])) {
 ?>
 
 
-<form action="" method="post">
+<form action="#" method="post">
     <table class="table table-bordered table-hover">
         <div class="row form-group">
             <div id="bulkOptionsContainer" class="col-sm-4">
@@ -63,7 +63,7 @@ if (isset($_POST['checkboxArray'])) {
             </div>
             <div class="col-sm-4">
                 <input type="submit" name="submit" value="Apply" class="btn btn-success">
-                <a class="btn btn-primary" href="posts.php?source=add_post">Add New</a>
+                <a class="btn btn-primary" href="/cms/admin/posts.php?source=add_post">Add New</a>
             </div>
         </div>
         <thead>
@@ -132,7 +132,7 @@ while ($row = mysqli_fetch_assoc($posts_query)) {
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='POST'>
 		<input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
 		<?php
-echo "<td><input type='submit' value='Delete' class='btn btn-danger' name='delete'></td>";
+echo "<td><input type='submit' value='Delete' class='btn btn-danger delete' data-id={$post_id} name='delete'></td>";
 
 	?>
 	</form>
