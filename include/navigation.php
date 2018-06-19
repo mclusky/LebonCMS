@@ -61,12 +61,12 @@ if (!isLoggedIn()): ?>
                         <a href='/cms/admin'>Admin</a>
                     </li>
                     <li>
-                        <a href='/cms/logout.php'>Logout</a>
+                        <a href='/cms/include/logout.php'>Logout</a>
                     </li>
 <?php endif;?>
 
                     <li class='<?php echo $registration_class; ?>'><a href="/cms/registration">Registration</a></li>
-                    <li><a href="/cms/contact.php">Contact</a></li>
+                    <li><a href="/cms/contact">Contact</a></li>
 <?php
 if (isset($_SESSION['role'])) {
 	if (isset($_GET['p_id'])) {

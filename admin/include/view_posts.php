@@ -100,13 +100,25 @@ if (is_admin($user)) {
 
 		mysqli_stmt_execute($stmt);
 
+		mysqli_stmt_store_result($stmt);
+
 		mysqli_stmt_bind_result($stmt, $post_title, $post_id, $post_category_id, $post_author, $post_date, $post_image, $post_tags, $post_content, $post_status, $post_comment_count, $post_views, $cat_id, $cat_title);
 
 		while (mysqli_stmt_fetch($stmt)) {
 
-			$query2 = "SELECT * FROM comments WHERE comment_post_id = $post_id";
-			$query_comments = mysqli_query($connection, $query2);
-			$comment_count = mysqli_num_rows($query_comments);
+			$query2 = "SELECT * FROM comments WHERE comment_post_id = ?";
+
+			$stmt2 = mysqli_prepare($connection, $query2);
+
+			if ($stmt2) {
+				mysqli_stmt_bind_param($stmt2, 'i', $post_id);
+
+				mysqli_execute($stmt2);
+
+				mysqli_stmt_store_result($stmt2);
+
+				$comment_count = mysqli_stmt_num_rows($stmt2);
+			}
 
 			$postImage = imagePlaceholder($post_image);
 
@@ -125,7 +137,10 @@ if (is_admin($user)) {
 
         <td>{$post_views}</td>
         <td><a class='btn btn-info' href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
+
 			?>
+
+
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='POST'>
 		<input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
@@ -156,13 +171,27 @@ echo "<td><input type='submit' value='Delete' class='btn btn-danger delete' data
 
 		mysqli_stmt_execute($stmt);
 
+		mysqli_stmt_store_result($stmt);
+
 		mysqli_stmt_bind_result($stmt, $post_title, $post_id, $post_category_id, $post_author, $post_date, $post_image, $post_tags, $post_content, $post_status, $post_comment_count, $post_views, $cat_id, $cat_title);
 
 		while (mysqli_stmt_fetch($stmt)) {
 
-			$query2 = "SELECT * FROM comments WHERE comment_post_id = $post_id";
-			$query_comments = mysqli_query($connection, $query2);
-			$comment_count = mysqli_num_rows($query_comments);
+			$query2 = "SELECT * FROM comments WHERE comment_post_id = ?";
+
+			$stmt2 = mysqli_prepare($connection, $query2);
+
+			if ($stmt2) {
+				mysqli_stmt_bind_param($stmt2, 'i', $post_id);
+
+				mysqli_execute($stmt2);
+
+				mysqli_stmt_store_result($stmt2);
+
+				$comment_count = mysqli_stmt_num_rows($stmt2);
+			}
+
+			$postImage = imagePlaceholder($post_image);
 
 			echo "<tr>
         <td><input type='checkbox' class='checkboxes' name='checkboxArray[]' value='{$post_id}'></td>

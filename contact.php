@@ -1,65 +1,81 @@
 <?php include "include/header.php";?>
-
 <?php
+$msg = '';
+$msgClass = '';
 
-if (isset($_POST['submit'])) {
-// use wordwrap() if lines are longer than 70 characters
+if (filter_has_var(INPUT_POST, 'submit')) {
+	$name = htmlspecialchars($_POST['name']);
+	$email = htmlspecialchars($_POST['email']);
+	$message = htmlspecialchars($_POST['message']);
 
-	$to = 'chrismaryme@yahoo.co.uk';
-	$subject = wordwrap(escape($_POST['subject']), 70);
-	$msg = escape($_POST['message_body']);
-	$clean_msg = str_replace('/r/n', '<br>', $msg);
-	$header = "From: " . escape($_POST['email']);
+	if (!empty($email) && !empty($name) && !empty($message)) {
+		if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+			$msg = "Please use a valid email.";
+			$msgClass = 'alert-danger';
+		} else {
+			$toEmail = 'chrismaryme@yahoo.co.uk';
+			$subject = "Contact request from '{$name}'";
+			$body = "<h2>Contact Request</h2>
+				<h4>Name</h4><p>'{$name}'</p>
+				<h4>Email</h4><p>{$email}</p>
+				<h4>Message</h4><p>'{$message}'</p>";
+			$headers = "MIME-Version: 1.0" . "\r\n";
+			$headers .= "Content-Type:text/html;charset=UTF-8" . "\r\n";
+			$headers .= "From: '{$name}' <'{$email}'>" . "\r\n";
 
-	mail($to, $subject, $clean_msg, $header);
+			if (mail($toEmail, $subject, $body, $headers)) {
+				$msg = "Form Submitted";
+				$msgClass = "alert-success";
+				redirect('/cms');
 
-	echo "<h4 class='text-center'>Your message has been sent.</h4>";
+			} else {
+				$msg = "Your form was not submitted";
+				$msgClass = "alert-danger";
+			}
 
+		}
+
+	} else {
+		$msg = "Please fill in all fields.";
+		$msgClass = 'alert-danger';
+	}
 }
+
 ?>
-
-    <!-- Navigation -->
-
     <?php include "include/navigation.php";?>
 
+	<section id="login">
+    		<div class="container">
+					<?php if($msg !== ''): ?>
+						<div class="alert <?php echo $msgClass; ?>"><?php echo $msg; ?></div>
+					<?php endif; ?>
+        		<div class="row">
+            			<div class="col-xs-6 col-xs-offset-3">
+                			<div class="form-wrap">
 
-    <!-- Page Content -->
-    <div class="container">
+               				 	<h1>Contact Us</h1>
+						<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="m-3 p-5">
+							<div class="form-group">
+								<label for="name">Name</label>
+								<input type="text" class="form-control" name="name" value="<?php echo isset($_POST['name']) ? $name : ''; ?>">
+							</div>
+							<div class="form-group">
+								<label for="">Email</label>
+								<input type="email" class="form-control" name="email" value="<?php echo isset($_POST['email']) ? $email : ''; ?>">
+							</div>
+							<div class="form-group">
+								<label for="message">Message</label>
+								<textarea name="message" id="" cols="30" rows="10" class="form-control" ><?php echo isset($_POST['message']) ? $message : ''; ?></textarea>
+								</div>
+								<button class="btn btn-info" name="submit" ype="submit" value="Submit">Submit</button>
 
-<section id="login">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-6 col-xs-offset-3">
-                <div class="form-wrap">
-
-                <h1>Contact Us</h1>
-                    <form role="form" action="contact.php" method="post" id="login-form" autocomplete="off">
-                         <div class="form-group">
-                            <label for="email" class="">Email</label>
-                            <input type="email" name="email" id="email" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="subject" class="">Subject</label>
-                            <input type="text" name="subject" id="subject" class="form-control">
-                        </div>
-                         <div class="form-group">
-                            <label for="message_boy">Message: </label>
-                             <textarea name="message_body" id="" cols="30" rows="10" class="form-control"></textarea>
-                        </div>
-
-                        <input type="submit" name="submit" id="btn-login" class="btn btn-lg btn-block btn-primary" value="Send">
-                    </form>
-
-
-                </div>
-            </div> <!-- /.col-xs-12 -->
-        </div> <!-- /.row -->
-    </div> <!-- /.container -->
-</section>
+						</form>
+         				</div>
+            			</div>
+       			 </div>
+    		</div>
+	</section>
 
 
         <hr>
-
-
-
-<?php include "include/footer.php";?>
+        <?php include "include/footer.php";?>

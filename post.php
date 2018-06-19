@@ -74,6 +74,7 @@ if (isset($_GET['p_id'])) {
 			$comment_author = $_SESSION['username'];
 			$comment_email = $_SESSION['email'];
 			$comment_content = escape($_POST['comment_content']);
+			$comment_post_author = $post_author;
 
 			if (!empty($comment_content)) {
 
