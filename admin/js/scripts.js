@@ -1,12 +1,12 @@
    $(document).ready(() => {
-       // Text Editor
+       // Text Editor init //
        ClassicEditor
            .create(document.querySelector('#body'))
            .catch(error => {
-               console.error(error);
+               console.log(error);
            });
 
-       //Select all radio buttons
+       //Select all radio buttons in admin //
        $('#selectAllBoxes').on('click', function() {
            if (this.checked) {
                $('.checkboxes').prop('checked', true);
@@ -24,6 +24,7 @@
        //         $(this).remove();
        //     });
 
+       // ONLINE USERS FUNCTION //
        function getOnlineUsers() {
            $.get("functions.php?onlineusers=result", (data) => {
                $('#users-online').text(`Users Online: ${data}`);
@@ -53,5 +54,12 @@
            const info = data.message;
            toastr.success(`${info} has just registered.`);
        });
+
+       const message = pusher.subscribe('contacted');
+       message.bind('new_message', (data) => {
+           const body = data.message;
+           toastr.success(`${body} has just sent you a message.`);
+       });
+       // ********************************************************* //
 
    });

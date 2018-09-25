@@ -12,9 +12,12 @@
     <title>Blog Home - Start Bootstrap Template</title>
     <!-- Bootstrap Core CSS -->
     <link href="/cms/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-9ralMzdK1QYsk4yBY680hmsb4/hJ98xK3w0TIaJ3ll4POWpWUYaA2bRjGGujGT8w" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link href="/cms/css/blog-home.css" rel="stylesheet">
     <link rel="stylesheet" href="/cms/css/styles.css">
+    <base href= "<?php echo "http://" . $_SERVER['HTTP_HOST'] . "/cms/" . "/>"; ?>">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

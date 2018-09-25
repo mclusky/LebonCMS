@@ -60,14 +60,14 @@ if ($count < 1) {
                     <a href="post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="author_posts.php?author=<?php echo $post_author; ?>&p_id=<?php echo $post_id; ?>"><?php echo $post_author; ?></a>
+                    by <a href="author/<?php echo $post_author; ?>"><?php echo $post_author; ?></a>
                 </p>
-                <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?></p>
+                <p><i class="fal fa-clock"></i> <?php echo $post_date; ?></p>
                 <hr>
-                <a href="post/<?php echo $post_id; ?>"><img class="img-responsive" src="<?php echo imagePlaceholder($post_image); ?>" alt=""></a>
+                <a href="post/<?php echo $post_id; ?>"><img class="img-fluid" src="<?php echo imagePlaceholder($post_image); ?>" alt=""></a>
                 <hr>
                 <p><?php echo $post_content; ?></p>
-                <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="btn btn-primary" href="post/<?php echo $post_id; ?>">Read More <i class="far fa-chevron-double-right"></i></a>
 
                 <hr>
 
@@ -81,15 +81,15 @@ if ($count < 1) {
 
         <hr>
 
-        <nav>
-            <ul class="pager">
+        <nav class="navbar">
+            <ul class="list-inline">
                 <?php
 
 for ($i = 1; $i <= $count; $i++) {
 	if ($i == $page) {
-		echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+		echo "<li class='list-inline-item mr-3'><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
 	} else {
-		echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+		echo "<li class='list-inline-item mr-3'><a href='index.php?page={$i}'>{$i}</a></li>";
 	}
 }
 

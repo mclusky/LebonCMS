@@ -18,16 +18,14 @@ if (ifIsMethod('post')) {
 <!-- Blog Sidebar Widgets Column -->
 <div class="col-md-4">
     <!-- Blog Search Well -->
-    <div class="well">
-        <h4>Blog Search</h4>
-        <form action="search.php" method="post">
-            <div class="input-group">
-                <input name="search" type="text" class="form-control">
-                <span class="input-group-btn">
-                    <button name='submit' class="btn btn-default" type="submit">
-                        <span class="glyphicon glyphicon-search"></span>
+    <div class="card card-body">
+        <h4 class="card-title">Blog Search</h4>
+        <form action="search.php" method="post" class="form-inline">
+            <div class="form-group">
+                <input name="search" type="text" class="form-control mr-sm-2">
+                <button name='submit' class="btn btn-primary " type="submit">
+                    <i class="fal fa-search"></i>
                 </button>
-                </span>
             </div>
         </form> <!-- search form -->
         <!-- /.input-group -->
@@ -37,17 +35,17 @@ if (ifIsMethod('post')) {
 
 
     <!-- Login Form -->
-<div class="well">
+<div class="card card-body mt-2">
 
     <?php if (isset($_SESSION['role'])): ?>
 
 
-    <h4>Logged in as <?php echo $_SESSION['username'] ?></h4>
-    <a href="/cms/include/logout.php" class="btn btn-primary">Logout</a>
+    <h4 class="card-title">Logged in as <?php echo $_SESSION['username'] ?></h4>
+    <a href="/cms/include/logout.php" class="btn btn-outline-primary">Logout</a>
 
     <?php else: ?>
 
-    <h4>Login</h4>
+    <h4 class="card-title">Login</h4>
 
     <form method="post" action="">
         <div class="form-group">
@@ -56,12 +54,10 @@ if (ifIsMethod('post')) {
 
           <div class="input-group">
             <input name="password" type="password" class="form-control" placeholder="Enter Password">
-            <span class="input-group-btn">
-               <button class="btn btn-primary" name="login" type="submit">Submit
-               </button>
-            </span>
+            <button class="btn btn-primary" name="login" type="submit">Submit
+            </button>
            </div>
-           <div class="form-group text-center">
+           <div class="form-group text-center mt-2">
                 <a href="forgot_password.php?forgot=<?php echo uniqid(true); ?>">Forgot Password?</a>
             </div>
     </form>
@@ -72,11 +68,11 @@ if (ifIsMethod('post')) {
 
 
     <!-- Blog Categories Well -->
-    <div class="well">
-        <h4>Blog Categories</h4>
+    <div class="card card-body mt-2">
+        <h4 class="card-title">Blog Categories</h4>
         <div class="row">
             <div class="col-lg-12">
-                <ul class="list-unstyled">
+                <div class="list-group">
                     <?php
 $query = "SELECT * FROM categories";
 $categories_query_sidebar = mysqli_query($connection, $query);
@@ -85,10 +81,10 @@ while ($row = mysqli_fetch_assoc($categories_query_sidebar)) {
 	$cat_title = $row['cat_title'];
 	$cat_id = $row['cat_id'];
 
-	echo "<li><a href='/cms/category/{$cat_id}'>{$cat_title}</a></li>";
+	echo "<a class='list-group-item list-group-item-action list-group-item-light' href='/cms/category/{$cat_id}'>{$cat_title}</a>";
 }
 ?>
-                </ul>
+                </div>
             </div>
 
         </div>

@@ -20,7 +20,8 @@
 <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : ''; ?>
                              </small>
                         </h1>
-                        <div class="col-sm-6">
+                        <div class="row">
+                        <div class="col-lg-6">
 <?php insertCategories();?>
 
                             <form action="" method="post">
@@ -42,23 +43,26 @@ if (isset($_GET['update'])) {
 
 ?>
                         </div><!-- Category form -->
-                        <div class="col-sm-6">
-                            <table class='table table-bordered table-hover'>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Category Title</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                        <div class="col-lg-6">
+                            <div class="table-responsive">
+                                <table class='table table-bordered table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Category Title</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-<?php populateCategories();?>
-<?php deleteCategories();?>
+    <?php populateCategories();?>
+    <?php deleteCategories();?>
 
-                                </tbody>
+                                    </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
+                </div>
                 </div>
                 <!-- /.row -->
 

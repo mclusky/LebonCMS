@@ -21,8 +21,15 @@ function ifIsMethod($method = null) {
 
 	return false;
 }
+//***************************************************************************//
+// ********************** MYSQLI QUERY TEMPLATE *****************************//
+function queryDb($query) {
+	global $connection;
 
-// *************** CHECK USER ROLE ******************************//
+	return mysqli_query($connection, $query);
+}
+//***************************************************************************//
+// *************** CHECK IF USER IS LOGGED IN *******************************//
 function isLoggedIn() {
 
 	if (isset($_SESSION['role'])) {
@@ -31,14 +38,46 @@ function isLoggedIn() {
 		return false;
 	}
 }
-// ******************************************************************//
+// *************************************************************************//
+//*************************GET USER ID FROM SESSION ************************//
+function loggedInUserId() {
 
+	if (isLoggedIn()) {
+		$username = $_SESSION['username'];
+		$result = queryDb("SELECT * FROM users WHERE username = '{$username}'");
+		confirm($result);
+		$user = mysqli_fetch_array($result);
+		return mysqli_num_rows($result) > 0 ? $user['user_id'] : false;
+	}
+
+	return false;
+}
+//*********************************************************************//
+//********************CHECK IF POST IS LIKED BY USER ******************//
+function likedByUser($post_id) {
+
+	$loggedUser = loggedInUserId();
+	$result = queryDb("SELECT * FROM likes WHERE user_id = {$loggedUser} AND post_id = {$post_id}");
+	confirm($result);
+	return mysqli_num_rows($result) > 0 ? true : false;
+}
+
+//********************************************************************//
+//***********************GET NUMBER OF POST LIKES ********************//
+function getLikes($post_id) {
+
+	$result = queryDb("SELECT * FROM likes WHERE post_id = {$post_id}");
+	confirm($result);
+	echo mysqli_num_rows($result);
+
+}
+
+//*******************************************************************//
 //*************** CHECK LOGIN CREDENTIALS AND REDIRECT ***************//
 function userLoggedInRedirect($location) {
 	isLoggedIn() ? redirect($location) : '';
 }
 // *******************************************************************//
-
 // *********************** DISPLAY NUMBER OF ONLINE USERS *************//
 function onlineUsers() {
 
@@ -73,7 +112,6 @@ function onlineUsers() {
 // ******* CALL IT ****** //
 onlineUsers();
 // ************************************************************************** //
-
 // *************** CONFIRM CONNECTION TO DATABASE *************************** //
 function confirm($result) {
 	global $connection;
@@ -83,7 +121,6 @@ function confirm($result) {
 	}
 }
 // ************************************************************************** //
-
 // *************************** EDIT/UPDATE CMS *********************************** //
 function insertCategories() {
 	global $connection;
@@ -135,8 +172,8 @@ function populateCategories() {
 		echo "<tr>
             <td>{$cat_id}</td>
             <td>{$cat_title}</td>
-            <td><a class='btn btn-info' href='categories.php?update=${cat_id}'>Edit</a></td>
-            <td><a class='btn btn-danger' href='categories.php?delete=${cat_id}'>Delete</a></td>
+            <td class='text-center'><a class='btn btn-outline-info' href='categories.php?update=${cat_id}'>Edit</a></td>
+            <td class='text-center'><a class='btn btn-outline-danger' href='categories.php?delete=${cat_id}'>Delete</a></td>
         </tr>";
 
 	}
@@ -151,7 +188,6 @@ function updateStatus($options, $value) {
 	return $update_post_status;
 }
 // ******************************************************************* //
-
 // ****************** COUNT ROWS IN SELECTED TABLE ******************** //
 function countDetails($table) {
 	global $connection;
@@ -164,7 +200,6 @@ function countDetails($table) {
 
 }
 // ******************************************************************** //
-
 // ***************** GETTING DATA FOR ADMIN GRAPHS ******************** //
 function getTableData($table, $column, $status) {
 	global $connection;
@@ -177,7 +212,6 @@ function getTableData($table, $column, $status) {
 	return mysqli_num_rows($result);
 }
 // ******************************************************************* //
-
 // ********** PROTECT AGAINST SQL INJECIONS *************** //
 function escape($string) {
 	global $connection;
@@ -185,7 +219,6 @@ function escape($string) {
 
 }
 // *************************************************************** //
-
 // ******************* CHECK IF USER IS ADMIN***************** //
 function is_admin($username = '') {
 	global $connection;
@@ -198,7 +231,7 @@ function is_admin($username = '') {
 
 	return $row['user_role'] === 'admin' ? true : false;
 }
-
+//****************************************************************//
 // ************* VERIFY IF CREDENTIALS ALREADY EXIST **************//
 function usernameExists($username) {
 
@@ -222,7 +255,6 @@ function emailExists($email) {
 	return mysqli_num_rows($result) > 0 ? true : false;
 }
 // ***************************************************************** //
-
 // ************REGISTER USER AFTER CREDENTIALS CHECK**************** //
 function registerUser($username, $firstname, $lastname, $email, $password) {
 	global $connection;

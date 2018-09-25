@@ -20,18 +20,15 @@
                 </div>
                 <!-- /.row -->
 
-
-                <!-- /.row -->
-
 <div class="row">
     <div class="col-lg-3 col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
+        <div class="card">
+            <div class="card-header">
                 <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-file-text fa-5x"></i>
+                    <div class="col-3">
+                        <i class="far fa-file-alt fa-5x"></i></i>
                     </div>
-                    <div class="col-xs-9 text-right">
+                    <div class="col-9 text-right">
 <?php
 $posts_count = mysqli_num_rows(countDetails('posts'));
 echo "<div class='huge'>{$posts_count}</div>";
@@ -50,6 +47,8 @@ echo "<div class='huge'>{$posts_count}</div>";
                 </div>
             </a>
         </div>
+
+
     </div>
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-green">

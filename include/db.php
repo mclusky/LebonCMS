@@ -1,10 +1,10 @@
 <?php ob_start();?>
 <?php
 
-$db['db_host'] = 'ams10.siteground.eu';
-$db['db_user'] = 'chrisleb_Chris';
-$db['db_pass'] = '@php_Learning';
-$db['db_name'] = 'chrisleb_demo_cms_db';
+$db['db_host'] = 'localhost';
+$db['db_user'] = 'root';
+$db['db_pass'] = '@dmin_php2018$';
+$db['db_name'] = 'cms';
 
 foreach ($db as $key => $val) {
 	define(strtoupper($key), $val);

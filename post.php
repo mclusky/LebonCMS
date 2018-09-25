@@ -1,6 +1,59 @@
 <?php include 'include/header.php';?>
     <!-- Navigation -->
    <?php include 'include/navigation.php';?>
+
+    <?php
+//******************************//
+// SELECT AND UPDATE POST LIKES //
+//******************************//
+if (isset($_POST['liked'])) {
+
+	$post_id = $_POST['post_id'];
+	$user_id = $_POST['user_id'];
+
+	$query = "SELECT * FROM posts WHERE post_id = $post_id";
+	$queryPost = mysqli_query($connection, $query);
+	confirm($queryPost);
+	$post = mysqli_fetch_array($queryPost);
+	$likes = $post['likes'];
+
+	$query = "UPDATE posts SET likes = $likes+1 WHERE post_id = $post_id";
+	$queryLikes = mysqli_query($connection, $query);
+	confirm($queryLikes);
+
+	$query = "INSERT INTO likes(user_id, post_id) VALUES($user_id, $post_id)";
+	$createLikes = mysqli_query($connection, $query);
+	confirm($createLikes);
+
+	exit();
+}
+//**********************************************//
+// SELECT AND UPDATE POST UNLIKES/ DELETE LIKES//
+//*********************************************//
+if (isset($_POST['unliked'])) {
+
+	$post_id = $_POST['post_id'];
+	$user_id = $_POST['user_id'];
+
+	$query = "SELECT * FROM posts WHERE post_id = $post_id";
+	$queryPost = mysqli_query($connection, $query);
+	confirm($queryPost);
+	$post = mysqli_fetch_array($queryPost);
+	$likes = $post['likes'];
+
+	$query = "DELETE FROM likes WHERE post_id = $post_id AND user_id = $user_id";
+	$deleteLikes = mysqli_query($connection, $query);
+	confirm($deleteLikes);
+
+	$query = "UPDATE posts SET likes = $likes-1 WHERE post_id = $post_id";
+	$queryLikes = mysqli_query($connection, $query);
+	confirm($queryLikes);
+
+	exit();
+}
+?>
+
+
     <!-- Page Content -->
     <div class="container">
 
@@ -43,8 +96,8 @@ if (isset($_GET['p_id'])) {
 
 
              <h1 class="page-header">
-                    L.A Upholstery
-                    <small class='text-muted'>Posts</small>
+                   Lebon CMS
+                    <small class='text-muted'>smart and lightweight</small>
                 </h1>
 
                 <!-- First Blog Post -->
@@ -52,21 +105,35 @@ if (isset($_GET['p_id'])) {
                     <?php echo $post_title; ?>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php"><?php echo $post_author; ?></a>
+                    by <a href="/cms/author/<?php echo $post_author; ?>"><?php echo $post_author; ?></a>
                 </p>
-                <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?></p>
+                <p><i class="fal fa-clock"></i> <?php echo $post_date; ?></p>
                 <hr>
-                <img class="img-responsive" src="<?php echo imagePlaceholder($post_image) ?>" alt="">
+                <img class="img-fluid" src="<?php echo imagePlaceholder($post_image) ?>" alt="">
                 <hr>
                 <p><?php echo $post_content; ?></p>
                 <hr>
+                <?php if (isLoggedIn()) {?>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <a id="<?php echo likedByUser($post_id) ? 'unlike' : 'like' ?>" href="" data-toggle='tooltip' data-placement='top' title='<?php echo likedByUser($post_id) ? 'You liked this' : 'Like it' ?>'>
+                                    <i class="<?php echo likedByUser($post_id) ? 'fa fa-thumbs-o-down' : 'fa fa-thumbs-o-up' ?>">
+                                    </i> <?php echo likedByUser($post_id) ? 'Unlike' : 'Like' ?>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                <?php }?>
+                <div class="row">
+                    <div class="col-12">
+                         <p>Likes: <?php getLikes($post_id);?></p>
+                    </div>
+                </div>
 
-              <?php }
-
-		?>
-
+            <?php }?>
                 <!-- Blog Comments -->
-                <?php
+            <?php
 
 		if (isset($_POST['create_comment'])) {
 			$post_id = escape($_GET['p_id']);
@@ -120,7 +187,7 @@ if (isset($_GET['p_id'])) {
                     <?php
 } else {
 			?>
-                <p class="lead">You must be logged in to leave a comment.</p>
+                <p class="lead">You must <a href="/cms/login">Login</a> to leave a comment or to like this post.</p>
 
     <?php
 }
@@ -171,3 +238,38 @@ if (isset($_GET['p_id'])) {
         <hr>
 
 <?php include 'include/footer.php'?>
+
+<script>
+    $(document).ready(() => {
+
+    $("[data-toggle='tooltip']").tooltip();
+
+    $('#like').on('click', function() {
+        const post_id = <?php echo $post_id; ?>;
+        const user_id = <?php echo loggedInUserId(); ?>;
+        $.ajax({
+            url: '/cms/post.php?p_id=<?php echo $post_id; ?>',
+            type: 'post',
+            data: {
+                liked: 1,
+                post_id: post_id,
+                user_id: user_id
+            }
+        });
+    });
+
+    $('#unlike').on('click', function() {
+        const post_id = <?php echo $post_id; ?>;
+        const user_id = <?php echo loggedInUserId(); ?>;
+        $.ajax({
+            url: '/cms/post.php?p_id=<?php echo $post_id; ?>',
+            type: 'post',
+            data: {
+                unliked: 1,
+                post_id: post_id,
+                user_id: user_id
+            }
+        });
+    });
+});
+</script>

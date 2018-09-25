@@ -2,25 +2,21 @@
 	session_start();
 }
 ?>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-nav navbar-expand-md navbar-dark bg-dark mb-5" role="navigation">
         <div class="container">
 
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand" href="/cms">Lebon CMS</a>
-            </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
-                        <ul class="dropdown-menu" id="cat-dropdown">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
+                        <div class="dropdown-menu" id="cat-dropdown">
 
 
 <?php
@@ -44,34 +40,35 @@ while ($row = mysqli_fetch_assoc($categories_query)) {
 		$registration_class = 'active';
 	}
 
-	echo "<li class='{$category_class}'><a href='/cms/category/{$cat_id}'>{$cat_title}</a></li>";
+	echo "<a class='{$category_class} dropdown-item' href='/cms/category/{$cat_id}'>{$cat_title}</a>";
 }
 
 ?>
-    </ul>
+    </div>
 </li>
 <?php
 if (!isLoggedIn()): ?>
 
-                    <li>
-                        <a href='/cms/login'>Login</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href='/cms/login'>Login</a>
                     </li>
+                    <li class='<?php echo $registration_class; ?> nav-item'><a class="nav-link" href="/cms/registration">Registration</a></li>
 <?php else: ?>
-                    <li>
-                        <a href='/cms/admin'>Admin</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href='/cms/admin'>Admin</a>
                     </li>
-                    <li>
-                        <a href='/cms/include/logout.php'>Logout</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href='/cms/include/logout.php'>Logout</a>
                     </li>
 <?php endif;?>
 
-                    <li class='<?php echo $registration_class; ?>'><a href="/cms/registration">Registration</a></li>
-                    <li><a href="/cms/contact">Contact</a></li>
+
+                    <li class="nav-item"><a class="nav-link" href="/cms/contact">Contact</a></li>
 <?php
 if (isset($_SESSION['role'])) {
 	if (isset($_GET['p_id'])) {
 		$the_post_id = escape($_GET['p_id']);
-		echo "<li><a href='/cms/admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
+		echo "<li lass='nav-item'><a class='nav-link' href='/cms/admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
 	}
 }
 ?>

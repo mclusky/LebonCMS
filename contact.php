@@ -1,5 +1,20 @@
+
+<?php use PHPMailer\PHPMailer\Exception;?>
+<?php use PHPMailer\PHPMailer\PHPMailer;?>
+<?php require "./vendor/autoload.php";?>
 <?php include "include/header.php";?>
 <?php
+// **************** SET UP .ENV AND PUSHER *******************//
+$dotenv = $dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv->load();
+
+$options = array(
+	'cluster' => 'eu',
+	'encrypted' => true,
+);
+$pusher = new Pusher\Pusher(getenv('APP_KEY'), getenv('APP_SECRET'), getenv('APP_ID'), $options);
+// ************************************************************//
+
 $msg = '';
 $msgClass = '';
 
@@ -13,26 +28,35 @@ if (filter_has_var(INPUT_POST, 'submit')) {
 			$msg = "Please use a valid email.";
 			$msgClass = 'alert-danger';
 		} else {
-			$toEmail = 'chrismaryme@yahoo.co.uk';
-			$subject = "Contact request from '{$name}'";
-			$body = "<h2>Contact Request</h2>
-				<h4>Name</h4><p>'{$name}'</p>
-				<h4>Email</h4><p>{$email}</p>
-				<h4>Message</h4><p>'{$message}'</p>";
-			$headers = "MIME-Version: 1.0" . "\r\n";
-			$headers .= "Content-Type:text/html;charset=UTF-8" . "\r\n";
-			$headers .= "From: '{$name}' <'{$email}'>" . "\r\n";
+			$mail = new PHPMailer();
 
-			if (mail($toEmail, $subject, $body, $headers)) {
-				$msg = "Form Submitted";
+			//Server settings
+			$mail->isSMTP();
+			$mail->Host = Config::SMTP_HOST;
+			$mail->SMTPAuth = true;
+			$mail->Username = Config::SMTP_USER;
+			$mail->Password = Config::SMTP_PASSWORD;
+			$mail->SMTPSecure = 'tls';
+			$mail->Port = Config::SMTP_PORT;
+			$mail->isHTML(true);
+			$mail->CharSet = 'UTF-8';
+
+			$mail->setFrom('chris@gmail.com', $name);
+			$mail->addAddress($email);
+			$mail->Subject = 'Contact from CMS';
+			$mail->Body = $message;
+
+			if ($mail->send()) {
+				$emailSent = true;
+				$msg = "Your form was submitted";
 				$msgClass = "alert-success";
-				redirect('/cms');
+				$data['message'] = $name;
+				$pusher->trigger('contacted', 'new_message', $data);
 
 			} else {
 				$msg = "Your form was not submitted";
 				$msgClass = "alert-danger";
 			}
-
 		}
 
 	} else {
@@ -46,14 +70,12 @@ if (filter_has_var(INPUT_POST, 'submit')) {
 
 	<section id="login">
     		<div class="container">
-					<?php if($msg !== ''): ?>
+					<?php if ($msg !== ''): ?>
 						<div class="alert <?php echo $msgClass; ?>"><?php echo $msg; ?></div>
-					<?php endif; ?>
+					<?php endif;?>
         		<div class="row">
-            			<div class="col-xs-6 col-xs-offset-3">
-                			<div class="form-wrap">
-
-               				 	<h1>Contact Us</h1>
+            			<div class="col-12">
+               			<h1 class="text-center">Contact Us</h1>
 						<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="m-3 p-5">
 							<div class="form-group">
 								<label for="name">Name</label>
@@ -67,10 +89,9 @@ if (filter_has_var(INPUT_POST, 'submit')) {
 								<label for="message">Message</label>
 								<textarea name="message" id="" cols="30" rows="10" class="form-control" ><?php echo isset($_POST['message']) ? $message : ''; ?></textarea>
 								</div>
-								<button class="btn btn-info" name="submit" ype="submit" value="Submit">Submit</button>
+								<button class="btn btn-info btn-block" name="submit" ype="submit" value="Submit">Submit</button>
 
 						</form>
-         				</div>
             			</div>
        			 </div>
     		</div>
