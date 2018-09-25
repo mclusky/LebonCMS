@@ -4,4 +4,5 @@ admin/.DS_Store
 admin/images/.DS_Store
 index_old.php
 sftp-config.json
+.ftpconfig
 all_posts_templates.php

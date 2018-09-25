@@ -1,27 +1,27 @@
-
 <?php include 'include/admin_header.php';?>
-    <div id="wrapper">
+<header class="admin-header">
+    <!-- TOP Navigation -->
+   <?php include 'include/admin_top_navigation.php';?>
+</header>
+<!--PAGE CONTAINER-->
+<div class="container-fluid">
 
-
-
-        <!-- Navigation -->
-       <?php include 'include/admin_navigation.php';?>
-
-        <div id="page-wrapper">
-
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                           Welcome to Categories
-                            <small>
+    <!-- Page Heading -->
+    <div class="row my-3">
+        <div class="col-12 text-center">
+            <h1 class="page-header">
+               Welcome to Categories
+                <small>
 <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : ''; ?>
-                             </small>
-                        </h1>
-                        <div class="row">
-                        <div class="col-lg-6">
+                 </small>
+            </h1>
+        </div>
+    </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <?php include 'include/admin_side_navigation.php'; ?>
+                </div>
+                        <div class="col-lg-4">
 <?php insertCategories();?>
 
                             <form action="" method="post">
@@ -43,7 +43,7 @@ if (isset($_GET['update'])) {
 
 ?>
                         </div><!-- Category form -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <div class="table-responsive">
                                 <table class='table table-bordered table-hover'>
                                     <thead>
@@ -62,14 +62,13 @@ if (isset($_GET['update'])) {
                             </div>
                         </div>
                     </div>
-                </div>
-                </div>
+
+
                 <!-- /.row -->
 
             </div>
             <!-- /.container-fluid -->
 
-        </div>
-        <!-- /#page-wrapper -->
+
 
 <?php include 'include/admin_footer.php';?>

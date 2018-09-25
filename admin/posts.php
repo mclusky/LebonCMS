@@ -1,24 +1,21 @@
 
 <?php include 'include/admin_header.php';?>
-    <div id="wrapper">
-
-
-
-        <!-- Navigation -->
-       <?php include 'include/admin_navigation.php';?>
-
-        <div id="page-wrapper">
-
-            <div class="container-fluid">
-
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Navigation -->
+               <?php include 'include/admin_top_navigation.php';?>
+            </div>
+        </div>
                 <!-- Page Heading -->
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 text-center">
                     <h1 class="page-header">Welcome to Posts
                         <small>
 <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : ''; ?>
                         </small>
                     </h1>
+                    </div>
 <?php
 
 if (isset($_GET['source'])) {
@@ -51,13 +48,10 @@ default:
 
 
                 </div>
-                </div>
+
                 <!-- /.row -->
 
             </div>
             <!-- /.container-fluid -->
-
-        </div>
-        <!-- /#page-wrapper -->
 
 <?php include 'include/admin_footer.php';?>

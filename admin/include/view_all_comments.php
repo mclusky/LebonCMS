@@ -1,4 +1,5 @@
-           <table class="table table-bordered table-hover">
+<div class="table-responsive">
+           <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -48,9 +49,9 @@ while ($row = mysqli_fetch_assoc($comments_query)) {
                 <td><a href='../post.php?p_id=$post_id'>{$post_title}</a></td>
 
 
-                <td><a class='btn btn-primary' href='comments.php?approve=$comment_id'>Approve</a></td>
-                <td><a class='btn btn-warning' href='comments.php?reject=$comment_id'>Reject</a></td>
-                <td><a class='btn btn-danger' href='comments.php?delete=$comment_id'>Delete</a></td>
+                <td><a class='btn btn-outline-primary' href='comments.php?approve=$comment_id'>Approve</a></td>
+                <td><a class='btn btn-outline-warning' href='comments.php?reject=$comment_id'>Reject</a></td>
+                <td><a class='btn btn-outline-danger' href='comments.php?delete=$comment_id'>Delete</a></td>
 
             </tr>";
 	}
@@ -59,6 +60,7 @@ while ($row = mysqli_fetch_assoc($comments_query)) {
                         </tbody>
 
                     </table>
+                </div>
 
 <?php
 // Approve, delete and reject comments
