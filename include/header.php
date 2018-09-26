@@ -17,7 +17,7 @@
     <!-- Custom CSS -->
     <link href="/cms/css/blog-home.css" rel="stylesheet">
     <link rel="stylesheet" href="/cms/css/styles.css">
-    <base href= "<?php echo "http://" . $_SERVER['HTTP_HOST'] . "/cms/" . "/>"; ?>">
+    <base href= "<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/cms/' ;?>">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

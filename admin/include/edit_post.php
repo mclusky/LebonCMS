@@ -56,7 +56,7 @@ if (isset($_POST['update_post'])) {
 
 	confirm($update_post);
 
-	echo "<p class='bg-success'>Post Updated. <a href='../post.php?p_id={$post_edit_id}'>View Post</a> or <a href='posts.php'>Back to Posts</a></p>";
+	echo "<p class='p-3 text-success'>Post Updated. <a href='../post.php?p_id={$post_edit_id}'>View Post</a> or <a href='posts.php'>Back to Posts</a></p>";
 
 }
 

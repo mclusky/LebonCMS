@@ -35,11 +35,10 @@
            getOnlineUsers();
        }, 500);
 
-       $('.delete').on('click', function(e) {
+       $('.delete_post').on('click', function(e) {
            e.preventDefault();
            const id = $(this).data('id');
-           const url = `/cms/admin/posts.php?delete=${id}`;
-           $('.modal-link').attr('href', url);
+           $('.modal_delete_link').val(id);
            $('#myModal').modal('show');
        });
 

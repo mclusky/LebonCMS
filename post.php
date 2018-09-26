@@ -116,10 +116,11 @@ if (isset($_GET['p_id'])) {
                 <?php if (isLoggedIn()) {?>
                     <div class="row">
                         <div class="col-12">
-                            <p>
-                                <a id="<?php echo likedByUser($post_id) ? 'unlike' : 'like' ?>" href="" data-toggle='tooltip' data-placement='top' title='<?php echo likedByUser($post_id) ? 'You liked this' : 'Like it' ?>'>
-                                    <i class="<?php echo likedByUser($post_id) ? 'fa fa-thumbs-o-down' : 'fa fa-thumbs-o-up' ?>">
-                                    </i> <?php echo likedByUser($post_id) ? 'Unlike' : 'Like' ?>
+                            <p id="likes">
+                                <a href="post/<?php echo $post_id; ?>" class="<?php echo likedByUser($post_id) ? 'unlike' : 'like' ;?>" data-toggle='tooltip' data-placement='top' title="<?php echo likedByUser($post_id) ? 'You liked this' : 'Like it' ;?>">
+                                    <i class="<?php echo likedByUser($post_id) ? 'fal fa-thumbs-down' : 'fal fa-thumbs-up'; ?>">
+                                    </i>
+                                    <?php echo likedByUser($post_id) ? 'Unlike' : 'Like' ;?>
                                 </a>
                             </p>
                         </div>
@@ -168,8 +169,8 @@ if (isset($_GET['p_id'])) {
 			$username = $_SESSION['username'];
 
 			?>
-                <div class="well">
-                    <h4>Leave a Comment:</h4>
+                <div class="card card-body">
+                    <h4 class="card-title">Leave a Comment:</h4>
                     <form role="form" action="" method="post">
                         <div class="form-group">
                             <label for="comment_author">Posting as</label>
@@ -213,9 +214,9 @@ if (isset($_GET['p_id'])) {
 			?>
 
                 <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                <div class="media clearfix">
+                    <a class="float-left" href="#">
+                        <img class="media-object img-fluid mr-2" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body">
                         <h4 class="media-heading"><?php echo $comment_author; ?></h4>
@@ -244,7 +245,7 @@ if (isset($_GET['p_id'])) {
 
     $("[data-toggle='tooltip']").tooltip();
 
-    $('#like').on('click', function() {
+    $('#likes a.like').on('click', function(e) {
         const post_id = <?php echo $post_id; ?>;
         const user_id = <?php echo loggedInUserId(); ?>;
         $.ajax({
@@ -258,7 +259,7 @@ if (isset($_GET['p_id'])) {
         });
     });
 
-    $('#unlike').on('click', function() {
+    $('#likes a.unlike').on('click', function(e) {
         const post_id = <?php echo $post_id; ?>;
         const user_id = <?php echo loggedInUserId(); ?>;
         $.ajax({

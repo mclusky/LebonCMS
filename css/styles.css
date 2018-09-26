@@ -2,24 +2,22 @@
     background: #fca976 !important;
 }
 
-
 /*#main-footer {
     position: relative;
     bottom: 0;
 }*/
-
 .post-img {
     max-width: 150px;
     max-height: 150px;
 }
 
-#like,
-#unlike {
+.like,
+.unlike {
     cursor: pointer;
     color: #44ac9b;
 }
 
-#like:hover,
-#unlike:hover {
+.like:hover,
+.unlike:hover {
     color: #FC5A4EFF;
 }

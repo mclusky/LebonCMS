@@ -57,7 +57,7 @@ if ($count < 1) {
 
                 <!-- First Blog Post -->
                 <h2>
-                    <a href="post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
+                    <a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
                 </h2>
                 <p class="lead">
                     by <a href="author/<?php echo $post_author; ?>"><?php echo $post_author; ?></a>

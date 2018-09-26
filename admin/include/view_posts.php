@@ -137,16 +137,16 @@ if (is_admin($user)) {
         <td><a href='post_comments.php?id={$post_id}'>{$comment_count}</a></td>
 
         <td>{$post_views}</td>
-        <td><a class='btn btn-info' href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
+        <td><a class='btn btn-outline-info' href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
 
 			?>
 
 
 
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='POST'>
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
 		<input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
 		<?php
-echo "<td><input type='submit' value='Delete' class='btn btn-danger delete' data-id={$post_id} name='delete'></td>";
+echo "<td><input type='submit' value='Delete' class='btn btn-outline-danger delete_post' data-id={$post_id} name='delete'></td>";
 
 			?>
 	</form>
@@ -208,14 +208,13 @@ echo "<td><input type='submit' value='Delete' class='btn btn-danger delete' data
         <td><a href='post_comments.php?id={$post_id}'>{$comment_count}</a></td>
 
         <td>{$post_views}</td>
-        <td><a class='btn btn-info' href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
+        <td><a class='btn btn-outline-info' href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
 			?>
 
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='POST'>
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
 		<input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
 		<?php
-echo "<td><input type='submit' value='Delete' class='btn btn-danger delete' data-id={$post_id} name='delete'></td>";
-
+echo "<td><input type='submit' value='Delete' class='btn btn-outline-danger delete_post' data-id={$post_id} name='delete'></td>";
 			?>
 	</form>
 
@@ -236,11 +235,10 @@ echo "<td><input type='submit' value='Delete' class='btn btn-danger delete' data
 
 <?php
 
-if (isset($_POST['delete'])) {
-	$post_to_delete = escape($_POST['post_id']);
+if (isset($_POST['delete_item'])) {
+	$post_to_delete = escape($_POST['delete_item']);
 	$query = "DELETE FROM posts WHERE post_id = {$post_to_delete} ";
 	$delete_query = mysqli_query($connection, $query);
 	redirect('/cms/admin/posts.php');
 }
-
 ?>

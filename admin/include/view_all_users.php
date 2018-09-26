@@ -25,7 +25,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
 }
 
 ?>
-
+		<div class="table-responsive">
            <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -61,10 +61,10 @@ while ($row = mysqli_fetch_assoc($users_query)) {
                 <td>{$user_lastname}</td>
                 <td>{$user_email}</td>
                 <td>{$user_role}</td>
-                <td><a class='btn btn-primary' href='users.php?change_to_admin={$user_id}'>Make Admin</a></td>
-                <td><a class='btn btn-warning' href='users.php?change_to_sub={$user_id}'>Remove Admin</a></td>
-                <td><a class='btn btn-info' href='users.php?source=edit_user&user_to_edit={$user_id}'>Edit</a></td>
-                <td><a class='delete btn btn-danger' href='users.php?delete={$user_id}'>Delete</a></td>
+                <td><a class='btn btn-outline-primary' href='users.php?change_to_admin={$user_id}'>Make Admin</a></td>
+                <td><a class='btn btn-outline-danger' href='users.php?change_to_sub={$user_id}'>Remove Admin</a></td>
+                <td><a class='btn btn-outline-primary' href='users.php?source=edit_user&user_to_edit={$user_id}'>Edit</a></td>
+                <td><a class='delete btn btn-outline-danger' href='users.php?delete={$user_id}'>Delete</a></td>
             </tr>";
 
 }
@@ -72,4 +72,4 @@ while ($row = mysqli_fetch_assoc($users_query)) {
                         </tbody>
 
                     </table>
-
+				</div>
