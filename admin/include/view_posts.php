@@ -50,6 +50,7 @@ if (isset($_POST['checkboxArray'])) {
 
 
 <form action="#" method="post">
+    <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <div class="row form-group">
             <div id="bulkOptionsContainer" class="col-sm-4">
@@ -230,6 +231,7 @@ echo "<td><input type='submit' value='Delete' class='btn btn-danger delete' data
 ?>
         </tbody>
     </table>
+    </div>
 </form>
 
 <?php

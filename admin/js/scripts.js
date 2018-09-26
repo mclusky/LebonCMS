@@ -35,7 +35,7 @@
            getOnlineUsers();
        }, 500);
 
-       $('.delete').on('click', function() {
+       $('.delete').on('click', function(e) {
            e.preventDefault();
            const id = $(this).data('id');
            const url = `/cms/admin/posts.php?delete=${id}`;

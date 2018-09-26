@@ -111,9 +111,9 @@ while ($row = mysqli_fetch_assoc($select_category)) {
 		</select>
 	</div>
 	<div class="form-group">
-		<img width=200 src="../images/<?php echo $post_image; ?>" alt="">
+		<img class="img-fluid" width=200 src="../images/<?php echo $post_image; ?>" alt="">
 		<label for="post_image">Post Image</label>
-		<input type="file" class="form-control" name="post_image">
+		<input type="file" class="form-control p-2" name="post_image">
 	</div>
 	<div class="form-group">
 		<label for="post_tags">Post Tags</label>

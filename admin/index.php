@@ -1,4 +1,3 @@
-
 <?php include 'include/admin_header.php';?>
 <header class="admin-header">
     <!-- TOP Navigation -->
