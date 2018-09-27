@@ -121,7 +121,7 @@ function confirm($result) {
 	}
 }
 // ************************************************************************** //
-// *************************** EDIT/UPDATE CMS *********************************** //
+// *************************** EDIT/UPDATE CMS****************************** //
 function insertCategories() {
 	global $connection;
 	if (isset($_POST['submit'])) {
@@ -220,16 +220,18 @@ function escape($string) {
 }
 // *************************************************************** //
 // ******************* CHECK IF USER IS ADMIN***************** //
-function is_admin($username = '') {
+function is_admin() {
 	global $connection;
 
-	$query = "SELECT user_role FROM users WHERE username = '{$username}'";
-	$result = mysqli_query($connection, $query);
-	confirm($result);
+	if(isLoggedIn()) {
+		$query = "SELECT user_role FROM users WHERE user_id =" . $_SESSION['user_id']. "";
+		$result = mysqli_query($connection, $query);
+		confirm($result);
 
-	$row = mysqli_fetch_array($result);
+		$row = mysqli_fetch_array($result);
 
-	return $row['user_role'] === 'admin' ? true : false;
+		return $row['user_role'] === 'admin' ? true : false;
+	}
 }
 //****************************************************************//
 // ************* VERIFY IF CREDENTIALS ALREADY EXIST **************//
@@ -287,7 +289,7 @@ function loginUser($username, $password) {
 
 	while ($row = mysqli_fetch_array($login_user)) {
 
-		$db_id = $row['user_id'];
+		$db_user_id = $row['user_id'];
 		$db_password = $row['user_password'];
 		$db_username = $row['username'];
 		$db_firstname = $row['user_firstname'];
@@ -298,12 +300,12 @@ function loginUser($username, $password) {
 		if (password_verify($password, $db_password)) {
 
 			session_start();
-
+			$_SESSION['user_id'] = $db_user_id;
 			$_SESSION['username'] = $db_username;
 			$_SESSION['firstname'] = $db_firstname;
 			$_SESSION['lastname'] = $db_lastname;
 			$_SESSION['role'] = $db_role;
-			$_SESSION['email'] = db_email;
+			$_SESSION['email'] = $db_email;
 
 			redirect('/cms/admin/');
 

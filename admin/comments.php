@@ -7,23 +7,23 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <div class="row my-3">
-        <div class="col-lg-12 text-center">
-        <h1 class="page-header">Welcome to Comments
-             <small>
-<?php echo isset($_SESSION['username']) ? $_SESSION['username'] : ''; ?>
-                </small>
-        </h1>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-xl-2">
+    <div class="row">
+        <div class="col-lg-3 p-0 pr-2 pr-lg-0">
             <?php include 'include/admin_side_navigation.php';?>
         </div>
-        <div class="col-xl-10">
-            <?php
-            	include 'include/view_all_comments.php';
-            ?>
+        <div class="col-lg-9 row mt-3">
+            <div class="col-12 text-center mb-5">
+                <h1 class="page-header">Welcome to Comments
+                     <small>
+        <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : ''; ?>
+                        </small>
+                </h1>
+            </div>
+            <div class="col-12">
+                <?php
+                	include 'include/view_all_comments.php';
+                ?>
+            </div>
         </div>
     </div>
 </div>
